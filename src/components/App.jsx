@@ -3,7 +3,7 @@ import { Container } from './App.styled';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './SearchBar/SearchBar';
 import { Button } from './Button/Button';
-import { getImages } from '../utils/getImages';
+import { getImages } from '../services/getImages';
 import { Modal } from './Modal/Modal';
 import { GlobalStyle } from './GlobalStyles';
 import { Loader } from './Loader/Loader';
@@ -98,10 +98,14 @@ export class App extends Component {
             <ImageGallery images={images} onClick={this.onGalleryClickHandle} />
           )}
           {totalPages > pageNumber && (
-            <Button onClick={this.onLoadMoreHandle}>Load more</Button>
+            <Button
+              onClick={this.onLoadMoreHandle}
+              disabled={status === 'pending' && <Loader />}
+            >
+              Load more
+            </Button>
           )}
 
-          {status === 'pending' && <Loader />}
           {isModal && (
             <Modal
               imageUrl={currentImage.largeImageURL}
